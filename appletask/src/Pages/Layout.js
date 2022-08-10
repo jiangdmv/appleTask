@@ -7,6 +7,7 @@ const Layout = ({
   setFollower,
   setFollowing,
   setItems,
+  fetchError,
   setFetchError,
 }) => {
   const handleClick = () => {
@@ -22,16 +23,16 @@ const Layout = ({
       <nav>
         <ul>
           <li>
-            <Link to={`/users/${input}`}>Home</Link>
+            <Link to={input ? `/users/${input}` : "/users"}>Home</Link>
           </li>
 
           <li>
-            <Link to={input ? `/users/${input}/following` : "#"}>
+            <Link to={input ? `/users/${input}/following` : "/users"}>
               Following
             </Link>
           </li>
           <li>
-            <Link to={input ? `/users/${input}/repos` : "#"}>Repos</Link>
+            <Link to={input ? `/users/${input}/repos` : "/users"}>Repos</Link>
           </li>
           <li>
             <Link to="/" onClick={handleClick}>
