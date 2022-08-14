@@ -1,13 +1,15 @@
-const Following = ({ following, setFollowing }) => {
-  const handleClick = () => {
-    setFollowing((prev) => prev + 10);
-  };
+import { useSelector, useDispatch } from "react-redux";
+import { updateFollowing, getUser } from "../app/githubSlice";
+
+const Following = () => {
+  const { following } = useSelector(getUser);
+  const dispatch = useDispatch();
 
   return (
     <>
       <h1>Following</h1>
       <p>{following}</p>
-      <button onClick={handleClick}>Add</button>
+      <button onClick={() => dispatch(updateFollowing())}>Add</button>
     </>
   );
 };

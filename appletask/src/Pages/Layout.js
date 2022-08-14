@@ -1,38 +1,36 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, Link } from "react-router-dom";
+import { updateInput } from "../app/githubSlice";
 
-const Layout = ({
-  input,
-  setInput,
-  setName,
-  setFollower,
-  setFollowing,
-  setItems,
-  fetchError,
-  setFetchError,
-}) => {
+const Layout = () => {
+  const dispatch = useDispatch();
+  const { input, fetchError } = useSelector((state) => state.github);
+
   const handleClick = () => {
-    setInput("");
-    setName("");
-    setFollower(0);
-    setFollowing(0);
-    setItems([]);
-    setFetchError(null);
+    dispatch(updateInput(""));
   };
+
   return (
     <>
       <nav>
         <ul>
           <li>
-            <Link to={input ? `/users/${input}` : "/users"}>Home</Link>
+            <Link to={`/users/${input}`}>Home</Link>
           </li>
 
           <li>
-            <Link to={input ? `/users/${input}/following` : "/users"}>
+            <Link
+              to={!fetchError ? `/users/${input}/following` : `/users/${input}`}
+            >
               Following
             </Link>
           </li>
           <li>
-            <Link to={input ? `/users/${input}/repos` : "/users"}>Repos</Link>
+            <Link
+              to={!fetchError ? `/users/${input}/repos` : `/users/${input}`}
+            >
+              Repos
+            </Link>
           </li>
           <li>
             <Link to="/" onClick={handleClick}>

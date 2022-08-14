@@ -1,15 +1,37 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getUser } from "../app/githubSlice";
+import axios from "axios";
 
 const getRandomInt = (max) => {
   return Math.floor(Math.random() * max);
 };
 
-const Repos = ({ name, follower, following, items, isLoadingRepos }) => {
+const Repos = () => {
+  const { name, follower, following, repos_url } = useSelector(getUser);
+
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
   const [repos, setRepos] = useState("");
   const [status, setStatus] = useState();
 
   useEffect(() => {
-    if (isLoadingRepos || items.length === 0) return;
+    const fetchData = async (url) => {
+      try {
+        const res = await axios.get(url);
+        setItems(res.data);
+      } catch (err) {
+        setFetchError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData(repos_url);
+  }, [repos_url]);
+
+  useEffect(() => {
+    if (isLoading || items.length === 0) return;
     const item = items[getRandomInt(items.length)];
     setRepos(item.full_name);
     setStatus(item.private);
@@ -18,7 +40,9 @@ const Repos = ({ name, follower, following, items, isLoadingRepos }) => {
   return (
     <>
       <h1>Repos</h1>
-      {!isLoadingRepos && items.length ? (
+      {isLoading && <p>Loading data...</p>}
+      {fetchError && <p style={{ color: "red" }}>Error: {fetchError}</p>}
+      {!isLoading && !fetchError && items.length ? (
         <p>
           User {name} with {follower} followers is following {following}. One
           repo for this user is {repos} and it is{" "}

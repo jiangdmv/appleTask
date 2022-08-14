@@ -1,16 +1,24 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { getUser } from "../app/githubSlice";
 
-const Home = ({ name, follower, isLoading, fetchError }) => {
+const Home = () => {
+  const { name, follower } = useSelector(getUser);
+  const { fetchError, status } = useSelector((state) => state.github);
+
   return (
     <div>
       <h1>Home</h1>
-      {isLoading && <p>Loading data...</p>}
-      {fetchError && <p style={{ color: "red" }}>Error: {fetchError}</p>}
-      {!isLoading && !fetchError && (
+
+      {status === "loading" ? (
+        <p>Loading data...</p>
+      ) : status === "success" ? (
         <>
           <p>Name: {name}</p>
           <p>Number of followers: {follower}</p>
         </>
+      ) : (
+        <p style={{ color: "red" }}>Error: {fetchError}</p>
       )}
     </div>
   );
