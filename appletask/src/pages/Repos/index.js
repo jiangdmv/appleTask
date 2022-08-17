@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getUser } from "../app/githubSlice";
+import { getUser } from "../../app/githubSlice";
 import axios from "axios";
 
 const getRandomInt = (max) => {
@@ -21,6 +21,7 @@ const Repos = () => {
       try {
         const res = await axios.get(url);
         setItems(res.data);
+        setFetchError(null);
       } catch (err) {
         setFetchError(err.message);
       } finally {
@@ -31,7 +32,7 @@ const Repos = () => {
   }, [repos_url]);
 
   useEffect(() => {
-    if (isLoading || items.length === 0) return;
+    if (items.length === 0) return;
     const item = items[getRandomInt(items.length)];
     setRepos(item.full_name);
     setStatus(item.private);
@@ -40,16 +41,21 @@ const Repos = () => {
   return (
     <>
       <h1>Repos</h1>
-      {isLoading && <p>Loading data...</p>}
-      {fetchError && <p style={{ color: "red" }}>Error: {fetchError}</p>}
-      {!isLoading && !fetchError && items.length ? (
+      {isLoading ? (
+        <p>Loading data...</p>
+      ) : fetchError ? (
+        <p style={{ color: "red" }}>Error: {fetchError}</p>
+      ) : items.length ? (
         <p>
           User {name} with {follower} followers is following {following}. One
           repo for this user is {repos} and it is{" "}
           {status ? "private" : "not private"}.
         </p>
       ) : (
-        <p>This user has no repos</p>
+        <p>
+          User {name} with {follower} followers is following {following}. This
+          user has no repos.
+        </p>
       )}
     </>
   );

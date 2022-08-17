@@ -13,7 +13,7 @@ export const githubSlice = createSlice({
   initialState: {
     input: "",
     data: [],
-    user: { name: "", follower: 0, following: 0, repos_url: "" },
+    user: { name: "", login: "", follower: 0, following: 0, repos_url: "" },
     status: "",
     fetchError: null,
   },
@@ -35,10 +35,15 @@ export const githubSlice = createSlice({
       state.data = action.payload;
       state.user = {
         name: action.payload.name,
+        login: action.payload.login,
         follower: action.payload.followers,
         following: action.payload.followers + 10,
         repos_url: action.payload.repos_url,
       };
+      localStorage.setItem(
+        JSON.stringify(action.payload.login),
+        JSON.stringify(action.payload)
+      );
     });
     builder.addCase(fetchApi.rejected, (state, action) => {
       state.fetchError = action.error.message;
