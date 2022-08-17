@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateInput, fetchApi } from "../../app/githubSlice";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import "./index.css";
 
 const Search = () => {
   const { input } = useSelector((state) => state.github);

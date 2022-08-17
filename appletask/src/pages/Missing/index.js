@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import "./index.css";
 
 const Missing = () => {
   const { fetchError } = useSelector((state) => state.github);

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getUser, updateInput } from "../../app/githubSlice";
 import { useEffect } from "react";
+import "./index.css";
 
 const Home = () => {
   const { name, follower } = useSelector(getUser);

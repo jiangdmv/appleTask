@@ -40,23 +40,25 @@ const Repos = () => {
 
   return (
     <>
-      <h1>Repos</h1>
-      {isLoading ? (
-        <p>Loading data...</p>
-      ) : fetchError ? (
-        <p style={{ color: "red" }}>Error: {fetchError}</p>
-      ) : items.length ? (
-        <p>
-          User {name} with {follower} followers is following {following}. One
-          repo for this user is {repos} and it is{" "}
-          {status ? "private" : "not private"}.
-        </p>
-      ) : (
-        <p>
-          User {name} with {follower} followers is following {following}. This
-          user has no repos.
-        </p>
-      )}
+      <div>
+        <h1>Repos</h1>
+        {isLoading ? (
+          <p>Loading data...</p>
+        ) : fetchError ? (
+          <p style={{ color: "red" }}>Error: {fetchError}</p>
+        ) : items.length ? (
+          <p>
+            User {name} with {follower} followers is following {following}. One
+            repo for this user is {repos} and it is{" "}
+            {status ? "private" : "not private"}.
+          </p>
+        ) : (
+          <p>
+            User {name} with {follower} followers is following {following}. This
+            user has no repos.
+          </p>
+        )}
+      </div>
     </>
   );
 };
