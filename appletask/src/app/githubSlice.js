@@ -24,6 +24,16 @@ export const githubSlice = createSlice({
     updateFollowing: (state) => {
       state.user.following += 10;
     },
+    updateAll: (state, action) => {
+      state.status = "success";
+      state.user = {
+        name: action.payload.name,
+        login: action.payload.login,
+        follower: action.payload.followers,
+        following: action.payload.followers + 10,
+        repos_url: action.payload.repos_url,
+      };
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchApi.pending, (state, action) => {
@@ -40,10 +50,7 @@ export const githubSlice = createSlice({
         following: action.payload.followers + 10,
         repos_url: action.payload.repos_url,
       };
-      localStorage.setItem(
-        JSON.stringify(action.payload.login),
-        JSON.stringify(action.payload)
-      );
+      localStorage.setItem(state.input, JSON.stringify(action.payload));
     });
     builder.addCase(fetchApi.rejected, (state, action) => {
       state.fetchError = action.error.message;
@@ -54,5 +61,5 @@ export const githubSlice = createSlice({
 
 export const getUser = (state) => state.github.user;
 
-export const { updateInput, updateFollowing } = githubSlice.actions;
+export const { updateInput, updateFollowing, updateAll } = githubSlice.actions;
 export default githubSlice.reducer;

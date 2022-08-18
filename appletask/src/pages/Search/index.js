@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateInput, fetchApi } from "../../app/githubSlice";
+import { updateInput, fetchApi, updateAll } from "../../app/githubSlice";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import "./index.css";
@@ -18,7 +18,15 @@ const Search = () => {
       dispatch(updateInput(""));
       return;
     }
-    dispatch(fetchApi(input));
+    console.log(JSON.parse(localStorage.getItem(input)));
+    if (localStorage.getItem(input)) {
+      let oldData = JSON.parse(localStorage.getItem(input));
+      dispatch(updateAll(oldData));
+      console.log("works!");
+    } else {
+      console.log("web");
+      dispatch(fetchApi(input));
+    }
     navigate("/users/" + input);
   };
 

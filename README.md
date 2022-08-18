@@ -9,7 +9,7 @@ App Instructions:
 
 I included all the page components in a "pages" folder.
 
-The beginning route is a Search page with a text input for entering username. The search button will fetch data of the specific user from github API and redirect to Home page
+The beginning route is a Search page with a text input for entering username. The search button will fetch data of the specific user from github API and redirect to Home page. Fetched user data are stored in localStorage to facilitate future search for the same username.
 
 If fetch is successful, the Home page will display name and number of followers, otherwise it will redirect to an error page containing a "search again" link for redirecting to the Search page.
 
@@ -34,5 +34,3 @@ Since there is no need to pass the repos information to other components, I used
 Further work:
 
 This app can be modified to Typescript, which could control the object type and React function props type.
-
-Frontend database can be implemented.
