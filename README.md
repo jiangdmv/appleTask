@@ -2,12 +2,8 @@ Installation:
 
 Using npm:
 npm install
+
 npm start
-
-Using docker:
-docker-compose up -d --build
-
-docker-compose up
 
 App Instructions:
 
