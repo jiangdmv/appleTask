@@ -22,9 +22,7 @@ const Search = () => {
     if (localStorage.getItem(input)) {
       let oldData = JSON.parse(localStorage.getItem(input));
       dispatch(updateAll(oldData));
-      console.log("works!");
     } else {
-      console.log("web");
       dispatch(fetchApi(input));
     }
     navigate("/users/" + input);
